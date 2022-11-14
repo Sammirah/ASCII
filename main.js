@@ -1,106 +1,83 @@
 canvas = document.getElementById('myCanvas');
 ctx = canvas.getContext("2d");
 
-backgroundImage = "parkingLot.jpg";
-greencarImage = "car2.png";
 
-greencar_width = 75;
-greencar_height = 100;
+img_width = 300;
+img_height = 100;
 
-greencar_x = 5;
-greencar_y = 225;
+var img_image;
+
+img_x = 100;
+img_y = 100;
 
 function add() {
-	background_imgTag = new Image();
-	background_imgTag.onload = uploadBackground;
-	background_imgTag.src = backgroundImage
-
-	greencar_imgTag = new Image();
-	greencar_imgTag.onload = uploadGreenCar;
-	greencar_imgTag.src = greencarImage 
+	img_imgTag = new Image(); //definindo uma variável com uma nova imagem
+	img_imgTag.onload = uploadimg; // ajustando uma função, ao carregar essa variável
+	img_imgTag.src = img_image;   // carregar uma imagem
 }
 
-function uploadBackground() {
-	ctx.drawImage(background_imgTag, 0, 0, canvas.width, canvas.height);
+function uploadimg() {
 
+	ctx.drawImage(img_imgTag, img_x, img_y, img_width, img_height);
 }
 
-function uploadGreenCar() {
-	ctx.drawImage(greencar_imgTag, greencar_x, greencar_y, greencar_width, greencar_height);
+window.addEventListener("keydown", my_keydown)
 
-	
-}
-
-
-
-window.addEventListener("keydown", myKeyDown);
-
-function myKeyDown(e)
+function my_keydown(e)
 {
 	keyPressed = e.keyCode;
 	console.log(keyPressed);
-		if(keyPressed == '38')
-		{
-			up();
-			console.log("up");
-		}
 	
-		if(keyPressed == '40')
+		if((keyPressed >=97 && keyPressed<=122)|| (keyPressed >=65 && keyPressed<=90))
 		{
-			down();
-			console.log("down");
+			aplhabetkey();
+			document.getElementById("d1").innerHTML="Você pressionou uma tecla do alfabeto"
 		}
 		
-		if(keyPressed == '37')
-		{
-			left();
-			console.log("left");
+		else if(keyPressed >=48 && keyPressed<=57) {
+			numberkey();
+			document.getElementById("d1").innerHTML="Você pressionou uma tecla numérica";
 		}
-	
-		if(keyPressed == '39')
-		{
-			right();
-			console.log("right");
-		}
-		
-		
-}
 
-function up()
-{
-	if(greencar_y >=0) 
-	{
-		greencar_y = greencar_y - 10;
-		uploadBackground();
-		uploadGreenCar();
+		else if(keyPressed >=37 && keyPressed<=40) {
+			arrowkey();
+			document.getElementById("d1").innerHTML="Você pressionou uma tecla direcional";
+		}
+
+		else if((keyPressed == 17) || (keyPressed == 18) || (keyPressed == 27))
+		{
+			specialkey();
+			document.getElementById("d1").innerHTML="Você pressionou uma tecla especial";
+		}
+
+		else { 
+		otherkey();
+		document.getElementById("d1").innerHTML="You pressed symbol or other key";
 	}
 }
 
-function down()
+function aplhabetkey()
 {
-	if(greencar_y <=300) 
-	{
-		greencar_y = greencar_y + 10;
-		uploadBackground();
-		uploadGreenCar();
-	}
+    img_image="alfabeto.png";
+	     add();
 }
-
-function left()
+function numberkey()
 {
-	if(greencar_x >=0) 
-	{
-		greencar_x = greencar_x - 10;
-		uploadBackground();
-		uploadGreenCar();
-	}}
-
-function right()
+	img_image="número.png";
+	add();
+}
+function arrowkey()
 {
-	if(greencar_x <=725) 
-	{
-		greencar_x = greencar_x + 10;
-		uploadBackground();
-		uploadGreenCar();
-	}
+	img_image="direcional.png";
+	add();
+}
+function specialkey()
+{
+    img_image="especial.png";
+	     add();
+}
+function otherkey()
+{
+	img_image="outras.png";
+	add();
 }
